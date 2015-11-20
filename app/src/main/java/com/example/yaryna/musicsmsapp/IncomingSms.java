@@ -17,7 +17,7 @@ public class IncomingSms extends BroadcastReceiver {
 
     // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
-
+    Context currentContext;
     public void onReceive(Context context, Intent intent) {
 
         // Retrieves a map of extended data from the intent.
@@ -31,9 +31,9 @@ public class IncomingSms extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
-
+                    currentContext = context;
+                    Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_SHORT).show();
                     processMessage(currentMessage);
-                   // Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_LONG).show();
                 }
             }
         } catch (Exception e) {
@@ -43,8 +43,7 @@ public class IncomingSms extends BroadcastReceiver {
 
     private void processMessage(SmsMessage currentMessage){
         String messageBody = currentMessage.getDisplayMessageBody().toString();
-        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody);
-
+        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody,currentContext);
     }
 
 
