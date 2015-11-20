@@ -14,9 +14,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    private ReentrantLock lock = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //creating a receiver for SMS messages
+        /*//creating a receiver for SMS messages
         BroadcastReceiver myReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -47,19 +50,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+        */
 
+        IncomingSms myReceiver = new IncomingSms();
         //Filter for intent : receive message
         IntentFilter filter = new IntentFilter(SMS_RECEIVED);
         registerReceiver(myReceiver,filter);
+
     }
 
     /**
      * Method to process received SMS messages
-     * @param message SmsMessage object constructed from received SMS
+     *  SmsMessage object constructed from received SMS
      **/
-    private void processMessage(SmsMessage message){
+   // private void processMessage(SmsMessage message){
+   //    String messageText = message.getMessageBody();
+   // }
 
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
