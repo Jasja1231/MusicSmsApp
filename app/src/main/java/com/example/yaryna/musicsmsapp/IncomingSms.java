@@ -31,14 +31,21 @@ public class IncomingSms extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
-                    Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_LONG).show();
+
+                    processMessage(currentMessage);
+                   // Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_LONG).show();
                 }
             }
         } catch (Exception e) {
-            Log.e("SmsReceiver", "Exception smsReceiver" +e);
+            Log.e("SmsReceiver", "Exception smsReceiver" + e);
         }
     }
 
+    private void processMessage(SmsMessage currentMessage){
+        String messageBody = currentMessage.getDisplayMessageBody().toString();
+        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody);
+
+    }
 
 
 }
