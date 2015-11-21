@@ -30,8 +30,10 @@ public class IncomingSms extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
                     currentContext = context;
-                    SoundMaker soundMaker = new SoundMaker();
+
+                    SoundMaker soundMaker = new SoundMaker(4);
                     soundMaker.playNote(240);
+
                     Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_SHORT).show();
                     processMessage(currentMessage);
                 }
