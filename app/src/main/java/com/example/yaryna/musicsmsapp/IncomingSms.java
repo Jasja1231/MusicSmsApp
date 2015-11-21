@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ public class IncomingSms extends BroadcastReceiver {
     final SmsManager sms = SmsManager.getDefault();
     Context currentContext;
     public void onReceive(Context context, Intent intent) {
-
         // Retrieves a map of extended data from the intent.
         Bundle bundle = intent.getExtras();
         try {
@@ -32,6 +30,8 @@ public class IncomingSms extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
                     currentContext = context;
+                    SoundMaker soundMaker = new SoundMaker();
+                    soundMaker.playNote(240);
                     Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_SHORT).show();
                     processMessage(currentMessage);
                 }
@@ -44,6 +44,15 @@ public class IncomingSms extends BroadcastReceiver {
     private void processMessage(SmsMessage currentMessage){
         String messageBody = currentMessage.getDisplayMessageBody().toString();
         SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody,currentContext);
+        if(smsValidityCheck.isValidSMS == true){
+            //procede with creating notes
+        }
+        else{
+            Toast.makeText(currentContext,
+                    "Received SMS does not match notes pattern!"
+                    ,Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
 

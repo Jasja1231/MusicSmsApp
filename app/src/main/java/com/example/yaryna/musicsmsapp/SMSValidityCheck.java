@@ -17,6 +17,10 @@ public class SMSValidityCheck {
     boolean isValidSMS;
     Context context;
 
+    public boolean isValid(){
+        return this.isValidSMS;
+    }
+
     /**Constructor for SMS pattern check*/
     public SMSValidityCheck(String messageBody,Context context){
         this.messageBody = messageBody;
@@ -24,9 +28,6 @@ public class SMSValidityCheck {
         this.context = context;
         splitNotes = splitIntoArray(messageBody);
         this.isValidSMS = checkValidity(splitNotes);
-      //if(this.isValidSMS){
-         //   constructNotesFromArray(splitNotes);
-        //}
     }
 
     private ArrayList<String> splitIntoArray(String messageToSplit){
@@ -40,11 +41,6 @@ public class SMSValidityCheck {
             Log.e("PatternSyntaxException:","PatternSyntaxException: " + ex);
         }
         return result;
-    }
-
-
-    private void constructNotesFromArray(ArrayList<String>  splitNotes){
-
     }
 
 
@@ -63,10 +59,6 @@ public class SMSValidityCheck {
             for(String s : splitNotes){
                 if(!s.matches(pattern))
                     isValid = false;
-                    Toast.makeText(this.context,
-                            "Received SMS does not match notes pattern!"
-                            ,Toast.LENGTH_LONG)
-                            .show();
                     break;
                 }
         }
