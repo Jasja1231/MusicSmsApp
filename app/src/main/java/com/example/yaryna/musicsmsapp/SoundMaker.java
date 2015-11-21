@@ -8,18 +8,16 @@ import android.os.Handler;
 
 
 /**
- * Created by Yaryna on 21/11/2015.
+ * Created by 15038588
  */
 public class SoundMaker {
 
-    private  int noteDuration;
     private  int sampleRate ;
     private  int SAMPLE_SIZE;
     private  byte[] audioBuffer;
     private  Handler handler = new Handler();
 
     public SoundMaker(int noteDuration){
-        this.noteDuration = noteDuration;
         sampleRate = 8000;
         SAMPLE_SIZE = noteDuration*sampleRate;
         audioBuffer = new byte[2*SAMPLE_SIZE];
