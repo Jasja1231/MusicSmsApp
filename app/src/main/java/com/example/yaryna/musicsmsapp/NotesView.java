@@ -36,7 +36,7 @@ public class NotesView extends View {
     private void drawParalelLines(Canvas canvas){
        for(int i=1; i <= LINE_COUNT; i++){
            int y_coordinate = MARGIN * i;
-           canvas.drawLine( 0,  y_coordinate ,  getWidth(), y_coordinate, paint);
+           canvas.drawLine( 0, y_coordinate , getWidth(), y_coordinate, paint);
         }
     }
 

@@ -14,12 +14,13 @@ public class SMSValidityCheck {
     //array of splitted words from received message to check
     ArrayList<String> splitNotes;
     String messageBody;
-    boolean isValidSMS;
+    private boolean isValidSMS;
     Context context;
 
     public boolean isValid(){
         return this.isValidSMS;
     }
+    public ArrayList<String> getSplitNotes(){return splitNotes;}
 
     /**Constructor for SMS pattern check*/
     public SMSValidityCheck(String messageBody,Context context){
@@ -51,13 +52,16 @@ public class SMSValidityCheck {
      * */
     private boolean checkValidity(ArrayList<String> splitNotes ){
         boolean isValid = true;
-        String pattern = "[1234680]{1}[EFGABCD]{1}[b]?[45]";
+
+        String pattern  = "[123468]{1}[EFGABCD]{1}[45]";   // REGULAR NOTES
+        String pattern2 = "[123468]{1}[GAEB]{1}[b][4]";    //FLATS FROM 4 OCTAVE
+        String pattern3 = "[123468]{1}[GABDCE]{1}[b][5]";  //FLATS FROM 5 OCTAVE
 
         if(splitNotes.isEmpty())
             isValid = false;
         else{
             for(String s : splitNotes){
-                if(!s.matches(pattern))
+                if(!s.matches(pattern) && !s.matches(pattern2) && !s.matches(pattern3) )
                     isValid = false;
                     break;
                 }

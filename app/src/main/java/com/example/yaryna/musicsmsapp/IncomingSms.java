@@ -9,8 +9,8 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+import java.util.ArrayList;
+
 
 /**
  * Created by Yaryna on 20/11/2015.
@@ -27,6 +27,7 @@ public class IncomingSms extends BroadcastReceiver {
         try {
 
             if (bundle != null) {
+
                 // Retrieve the SMS Messages received
                 Object[] pdusObj = (Object[]) bundle.get("pdus");
                 for (int i = 0; i < pdusObj.length; i++) {
@@ -34,17 +35,14 @@ public class IncomingSms extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
                     currentContext = context;
+                    int h = 0;
+                    if(h == 0){
+                        Toast.makeText(context,"i ::: " + i + " message: " + message + "Received",  Toast.LENGTH_SHORT).show();
+                        processMessage(currentMessage);
+                        h++;
+                    }
+                 }
 
-
-
-
-                    Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_SHORT).show();
-                    processMessage(currentMessage);
-                    SoundMaker soundMaker = new SoundMaker(4);
-                            soundMaker.playNote(480);
-
-
-                }
             }
         } catch (Exception e) {
             Log.e("SmsReceiver", "Exception smsReceiver" + e);
@@ -54,8 +52,13 @@ public class IncomingSms extends BroadcastReceiver {
     private void processMessage(SmsMessage currentMessage){
         String messageBody = currentMessage.getDisplayMessageBody().toString();
         SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody,currentContext);
-        if(smsValidityCheck.isValidSMS == true){
-            //procede with creating notes
+        if(smsValidityCheck.isValid() == true){
+            ArrayList<String> noteStrings = smsValidityCheck.getSplitNotes();
+            NotesConstructor notesConstructor = new NotesConstructor(noteStrings);
+            //GENERATE SOUNDS
+            ArrayList<NoteInstance> notes = notesConstructor.getNotes();
+            SoundMaker soundMaker = new SoundMaker(notes);
+            soundMaker.playNotes();
         }
         else{
             Toast.makeText(currentContext,
@@ -64,6 +67,4 @@ public class IncomingSms extends BroadcastReceiver {
                     .show();
         }
     }
-
-
 }
