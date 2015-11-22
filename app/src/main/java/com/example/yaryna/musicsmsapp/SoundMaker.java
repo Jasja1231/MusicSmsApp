@@ -12,12 +12,15 @@ import android.os.Handler;
  */
 public class SoundMaker {
 
+    private int duration;
     private  int sampleRate ;
     private  int SAMPLE_SIZE;
     private  byte[] audioBuffer;
     private  Handler handler = new Handler();
 
+
     public SoundMaker(int noteDuration){
+        this.duration = noteDuration;
         sampleRate = 8000;
         SAMPLE_SIZE = noteDuration*sampleRate;
         audioBuffer = new byte[2*SAMPLE_SIZE];
@@ -47,22 +50,8 @@ public class SoundMaker {
 
     public void playNote(double freq) {
         final double finFreq = freq;
-        final Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                fillBuffer(finFreq);
-                handler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        playBuffer();
-
-                    }
-                });
-            }
-        });
-        thread.start();
+        fillBuffer(finFreq);
+        playBuffer();
     }
 
 }

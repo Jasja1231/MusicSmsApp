@@ -9,11 +9,15 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
 /**
  * Created by Yaryna on 20/11/2015.
  */
 public class IncomingSms extends BroadcastReceiver {
 
+    android.os.Handler handler = new android.os.Handler();
     // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
     Context currentContext;
@@ -31,11 +35,15 @@ public class IncomingSms extends BroadcastReceiver {
                     Log.i("SmsReceiver", " message: " + message);
                     currentContext = context;
 
-                    SoundMaker soundMaker = new SoundMaker(4);
-                    soundMaker.playNote(240);
+
+
 
                     Toast.makeText(context," message: " + message + "Received",  Toast.LENGTH_SHORT).show();
                     processMessage(currentMessage);
+                    SoundMaker soundMaker = new SoundMaker(4);
+                            soundMaker.playNote(480);
+
+
                 }
             }
         } catch (Exception e) {
