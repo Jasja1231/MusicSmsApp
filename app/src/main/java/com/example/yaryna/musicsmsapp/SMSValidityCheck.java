@@ -53,15 +53,16 @@ public class SMSValidityCheck {
     private boolean checkValidity(ArrayList<String> splitNotes ){
         boolean isValid = true;
 
-        String pattern  = "[123468]{1}[EFGABCD]{1}[45]";   // REGULAR NOTES
-        String pattern2 = "[123468]{1}[GAEB]{1}[b][4]";    //FLATS FROM 4 OCTAVE
-        String pattern3 = "[123468]{1}[GABDCE]{1}[b][5]";  //FLATS FROM 5 OCTAVE
+        String pattern   = "[123468]{1}[EFGAB]{1}[4]";      // REGULAR NOTES
+        String pattern1  = "[123468]{1}[EFCD]{1}[5]";       // REGULAR NOTES
+        String pattern2  = "[123468]{1}[GAEBF]{1}[b][4]";    //FLATS FROM 4 OCTAVE
+        String pattern3  = "[123468]{1}[GABDCE]{1}[b][5]";  //FLATS FROM 5 OCTAVE
 
         if(splitNotes.isEmpty())
             isValid = false;
         else{
             for(String s : splitNotes){
-                if(!s.matches(pattern) && !s.matches(pattern2) && !s.matches(pattern3) )
+                if(!s.matches(pattern) &&  !s.matches(pattern1) && !s.matches(pattern2) && !s.matches(pattern3) )
                     isValid = false;
                     break;
                 }

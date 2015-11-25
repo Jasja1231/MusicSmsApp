@@ -3,7 +3,7 @@ package com.example.yaryna.musicsmsapp;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.os.Handler;
+import android.os.AsyncTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,11 +15,8 @@ import java.util.ArrayList;
  */
 public class SoundMaker {
 
-    private int duration;
     private final int SAMPLE_RATE = 8000 ;
-    private int SAMPLE_SIZE;
     private  byte[] audioBuffer;
-    private  Handler handler = new Handler();
     private  ArrayList<NoteInstance> notes;
 
     public SoundMaker(ArrayList<NoteInstance> noteInstances){
@@ -31,7 +28,10 @@ public class SoundMaker {
 
     private void constructAudioBufferForMelody(){
         for(NoteInstance note :this.notes){
+            //The purpose for this is to avoid sound jums between notes
+            NoteInstance emptynote = new NoteInstance("0XX");
             fillBufferForNote(note);
+            fillBufferForNote(emptynote);
         }
     }
 
@@ -49,7 +49,7 @@ public class SoundMaker {
     private void fillBufferForNote(NoteInstance note) {
        double noteFrequency = note.getFrequency();
         //TODO : CHECK THE DURATION
-        int noteDuration = note.getDuration()/2;
+        int noteDuration = note.getDuration();
         int sample_size = noteDuration*SAMPLE_RATE;
         byte[] noteAudioBuffer = new byte[2*sample_size];
 
@@ -94,21 +94,18 @@ public class SoundMaker {
     }
 
     public void playNotes() {
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //fillBuffer(finFreq);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        playBuffer();
-
-                    }
-                });
-            }
-        });
-
-        thread.start();
+       new BackgroundPlay().execute();
     }
+
+
+    private class BackgroundPlay extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            playBuffer();
+            return null;
+        }
+    }
+
 
 }

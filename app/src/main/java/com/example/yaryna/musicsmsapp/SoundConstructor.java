@@ -1,33 +1,15 @@
 package com.example.yaryna.musicsmsapp;
 
 /**
- * Created by Yaryna on 21/11/2015.
+ * Created by 15038588
  */
 
-
-/**Class stores frequency values for every tone,returns frequency for note*/
+/**Singleton class stores frequency values for every tone,returns frequency for specific note*/
 public  class SoundConstructor {
 
-    /**
-     A:  400.00 Hz
-     A#: 466.16 Hz
-     B:  493.88 Hz
+    private static SoundConstructor instance;
 
-     C:  523.25 Hz
-     C#: 554.37 Hz
-     D:  587.33 Hz
-     D#: 622.25 Hz
-     E:  659.26 Hz
-     F:  698.46 Hz
-     F#: 739.99 Hz
-     G:  783.99 Hz
-     G#: 830.61 Hz
-
-     The frequencies of notes in the next octave can be obtained
-     by doubling those shown above; those for the octave below
-     concert A can be obtained by halving, and so on.
-     */
-
+    //TODO: remove unused frequencies
     //3 octave
     final double A3      = 400     ;//Hz  la
     final double Bb3     = 466.16  ;//Hz
@@ -60,63 +42,75 @@ public  class SoundConstructor {
     final double B5      = B4  * 2  ;//Hz  si
 
 
+    //TODO: make class singleton
+    /**
+     A:  400.00 Hz
+     A#: 466.16 Hz
+     B:  493.88 Hz
+     C:  523.25 Hz
+     C#: 554.37 Hz
+     D:  587.33 Hz
+     D#: 622.25 Hz
+     E:  659.26 Hz
+     F:  698.46 Hz
+     F#: 739.99 Hz
+     G:  783.99 Hz
+     G#: 830.61 Hz
+     The frequencies of notes in the next octave can be obtained
+     by doubling those shown above; those for the octave below
+     concert A can be obtained by halving, and so on.
+     */
+
+    public static synchronized SoundConstructor getInstance()
+    {
+        if (instance == null)
+            instance = new SoundConstructor();
+
+        return instance;
+    }
 
     public double getSpecificSoundFrequency(String note){
         double result = 0 ;
        switch(note){
-           case "Eb4":
-               result = Eb4;
+           case "Eb4":result = Eb4;
                break;
-           case "E4":
-               result = E4;
+           case "Fb4":result = E4;
                break;
-           case "Gb4":
-               result = Gb4;
+           case "E4":result = E4;
+               break;
+           case "Gb4":result = Gb4;
                 break;
-           case "G4":
-               result = G4;
+           case "G4": result = G4;
                break;
-           case "Bb4":
-               result = Bb4;
+           case "Bb4":result = Bb4;
                break;
-           case "B4":
-               result = B4;
+           case "B4":result = B4;
                break;
-           case "Db5":
-               result = Db5;
+           case "Db5":result = Db5;
                 break;
-           case "D5":
-               result = D5;
+           case "D5":result = D5;
                break;
-           case "F5":
-               result = F5;
+           case "F5":result = F5;
                break;
-           case "F4":
-               result = F4;
+           case "Fb5":result = E5;
                break;
-           case "Ab4":
-               result = Ab4;
+           case "F4":result = F4;
+               break;
+           case "Ab4":result = Ab4;
                 break;
-           case "A4":
-               result = A4;
+           case "A4":result = A4;
                break;
-           case "C5":
-               result = C5;
+           case "C5":result = C5;
                break;
-           case "Eb5":
-               result = Eb5;
+           case "Eb5":result = Eb5;
                 break;
-           case "E5":
-               result = E5;
+           case "E5":result = E5;
                break;
-           case "Cb4":
-               result = B3;
+           case "Cb4":result = B3;
                break;
-           case"Cb5":
-               result = B4;
+           case"Cb5":result = B4;
                break;
-           default:
-               break;
+           default:break;
        }
         return result;
     }

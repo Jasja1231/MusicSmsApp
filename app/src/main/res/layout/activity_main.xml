@@ -4,37 +4,87 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#e8dcdc">
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".MainActivity">
 
         <com.example.yaryna.musicsmsapp.NotesView
             android:layout_width="match_parent"
-            android:layout_height="118dp"
-            android:id="@+id/view"
+            android:layout_height="800px"
+            android:id="@+id/note_view"
             android:background="#e8dcdc"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="false" />
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="@android:color/darker_gray"/>
 
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:text="@string/sent_your_sms"
+            android:layout_gravity="center_horizontal"
+            android:autoText="false"
+            android:foregroundGravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/try_it_out"
+            android:gravity="center_horizontal"
+            android:foregroundGravity="center_horizontal"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/buttons_layout_linear"
+            android:layout_gravity="top|center_horizontal"
+            android:gravity="center_horizontal">
+
+
+            <Button
+                android:text="Test it"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:id="@+id/play_before_send"
+                android:layout_margin="10dp">
+            </Button>
+
+            <Button
+                android:text="Send it"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:id="@+id/send"
+                android:layout_margin="10dp">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_dialog_email" /-->
 
 </android.support.design.widget.CoordinatorLayout>

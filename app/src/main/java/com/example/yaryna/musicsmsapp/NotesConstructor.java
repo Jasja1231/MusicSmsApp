@@ -3,7 +3,7 @@ package com.example.yaryna.musicsmsapp;
 import java.util.ArrayList;
 
 /**
- * Created by Yaryna on 22/11/2015.
+ * Created by 15038588
  */
 public class NotesConstructor {
         ArrayList<NoteInstance> notes;
