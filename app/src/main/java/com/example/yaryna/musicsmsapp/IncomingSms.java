@@ -8,6 +8,8 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,10 +20,15 @@ import java.util.ArrayList;
  */
 public class IncomingSms extends BroadcastReceiver {
 
+    final String ERROR_SMS = "Sms message received doesn't match notes pattern!";
+    final String ERROR_TEST = "Notes you want to send don't match notes pattern!";
+
     // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
     private Context currentContext;
     private NotesView notesView;
+   // private EditText editableNotes , editableNumber;
+   // private Button   buttonTestIt  , buttonSendIt  ;
 
     public void onReceive(Context context, Intent intent) {
         // Retrieves a map of extended data from the intent.
@@ -37,7 +44,7 @@ public class IncomingSms extends BroadcastReceiver {
                     currentContext = context;
 
                     Toast.makeText(context,"i ::: " + i + " message: " + message + "Received",  Toast.LENGTH_SHORT).show();
-                    processMessage(currentMessage);
+                    processMessageSMS(currentMessage);
                  }
             }
         } catch (Exception e) {
@@ -45,9 +52,19 @@ public class IncomingSms extends BroadcastReceiver {
         }
     }
 
-    private void processMessage(SmsMessage currentMessage){
+
+    private void processMessageSMS(SmsMessage currentMessage){
         String messageBody = currentMessage.getDisplayMessageBody().toString();
-        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody,currentContext);
+        processMessage(messageBody,ERROR_SMS);
+
+    }
+
+    public void drawAndPlay(String testMelodyString){
+        processMessage(testMelodyString,ERROR_TEST);
+    }
+
+    private void processMessage(String messageBody , String errorMessage){
+        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageBody);
         if(smsValidityCheck.isValid() == true){
             ArrayList<String> noteStrings = smsValidityCheck.getSplitNotes();
             NotesConstructor notesConstructor = new NotesConstructor(noteStrings);
@@ -57,18 +74,24 @@ public class IncomingSms extends BroadcastReceiver {
             this.notesView.setNotesArray(notes);
             SoundMaker soundMaker = new SoundMaker(notes);
             soundMaker.playNotes();
-
         }
         else{
             Toast.makeText(currentContext,
-                    "Received SMS does not match notes pattern!"
+                    errorMessage
                     ,Toast.LENGTH_LONG)
                     .show();
         }
     }
 
 
-    public void registerCurrentNotesView(NotesView notesView){
+    public void registerUIElements(NotesView notesView/*, EditText e1 ,EditText e2,Button buttonTestIt , Button buttonSendIt*/ ){
+       // this.buttonTestIt = buttonTestIt;
+        //this.buttonSendIt = buttonSendIt;
         this.notesView = notesView;
+       // this.editableNotes = e1;
+       // this.editableNumber = e2;
     }
+
+
+
 }

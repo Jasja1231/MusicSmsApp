@@ -50,8 +50,6 @@ public class NotesView extends View {
 
         for(NoteInstance note : notes ){
             double rightX = leftX + 100;
-
-
             double topY = 0 , bottomY = 0;
 
             double noteLine = note.getLine();

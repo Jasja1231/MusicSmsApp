@@ -76,7 +76,6 @@ public class SoundMaker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         audioBuffer = null; // clear before assigning new values
         audioBuffer = outputStream.toByteArray();
     }
@@ -97,15 +96,11 @@ public class SoundMaker {
        new BackgroundPlay().execute();
     }
 
-
     private class BackgroundPlay extends AsyncTask<Void,Void,Void> {
-
         @Override
         protected Void doInBackground(Void... params) {
             playBuffer();
             return null;
         }
     }
-
-
 }

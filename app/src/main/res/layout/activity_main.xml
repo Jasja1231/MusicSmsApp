@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity"
     android:background="#e8dcdc">
 
@@ -28,7 +29,6 @@
             android:layout_height="10px"
             android:background="@android:color/darker_gray"/>
 
-
         <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,11 +47,24 @@
             android:foregroundGravity="center_horizontal"
             android:textStyle="italic" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_notes" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/input_number"
+            android:gravity="center_horizontal"
+            android:foregroundGravity="center_horizontal"
+            android:textStyle="italic" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:id="@+id/edit_text_number"
+            android:inputType="number"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,12 +74,11 @@
             android:layout_gravity="top|center_horizontal"
             android:gravity="center_horizontal">
 
-
             <Button
                 android:text="Test it"
                 android:layout_height="wrap_content"
                 android:layout_width="150dp"
-                android:id="@+id/play_before_send"
+                android:id="@+id/button_test"
                 android:layout_margin="10dp">
             </Button>
 
@@ -74,13 +86,11 @@
                 android:text="Send it"
                 android:layout_height="wrap_content"
                 android:layout_width="150dp"
-                android:id="@+id/send"
+                android:id="@+id/button_send"
                 android:layout_margin="10dp">
             </Button>
         </LinearLayout>
-
     </LinearLayout>
-
 
     <!--android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"

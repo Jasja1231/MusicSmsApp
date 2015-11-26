@@ -15,7 +15,7 @@ public class SMSValidityCheck {
     ArrayList<String> splitNotes;
     String messageBody;
     private boolean isValidSMS;
-    Context context;
+
 
     public boolean isValid(){
         return this.isValidSMS;
@@ -23,10 +23,9 @@ public class SMSValidityCheck {
     public ArrayList<String> getSplitNotes(){return splitNotes;}
 
     /**Constructor for SMS pattern check*/
-    public SMSValidityCheck(String messageBody,Context context){
+    public SMSValidityCheck(String messageBody){
         this.messageBody = messageBody;
         //splitting array into separate words
-        this.context = context;
         splitNotes = splitIntoArray(messageBody);
         this.isValidSMS = checkValidity(splitNotes);
     }
@@ -53,10 +52,10 @@ public class SMSValidityCheck {
     private boolean checkValidity(ArrayList<String> splitNotes ){
         boolean isValid = true;
 
-        String pattern   = "[123468]{1}[EFGAB]{1}[4]";      // REGULAR NOTES
-        String pattern1  = "[123468]{1}[EFCD]{1}[5]";       // REGULAR NOTES
+        String pattern   = "[123468]{1}[EFGAB]{1}[4]";       // REGULAR NOTES
+        String pattern1  = "[123468]{1}[EFCD]{1}[5]";        // REGULAR NOTES
         String pattern2  = "[123468]{1}[GAEBF]{1}[b][4]";    //FLATS FROM 4 OCTAVE
-        String pattern3  = "[123468]{1}[GABDCE]{1}[b][5]";  //FLATS FROM 5 OCTAVE
+        String pattern3  = "[123468]{1}[GABDCE]{1}[b][5]";   //FLATS FROM 5 OCTAVE
 
         if(splitNotes.isEmpty())
             isValid = false;
