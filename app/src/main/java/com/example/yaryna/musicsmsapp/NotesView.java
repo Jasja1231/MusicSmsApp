@@ -93,6 +93,10 @@ public class NotesView extends View {
             }
 
 
+            if(note.getDuration() == 1 || note.getDuration() == 6 ){
+                rightX = rightX + 40;
+            }
+
             Bitmap noteBitmap = BitmapFactory.decodeResource(
                     getResources(), note.getResourceID());
 

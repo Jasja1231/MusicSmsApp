@@ -2,9 +2,6 @@ package com.example.yaryna.musicsmsapp;
 
 
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         final IncomingSms myReceiver = new IncomingSms();
         myReceiver.registerUIElements(noteView /*, editTextNotes, editTextNumer , buttonTestIt , buttonSendIt*/ );
+        myReceiver.setCurrentContex(getBaseContext());
         //Filter for intent : receive message
         IntentFilter filter = new IntentFilter(SMS_RECEIVED);
         registerReceiver(myReceiver,filter);
@@ -58,34 +56,39 @@ public class MainActivity extends AppCompatActivity {
         buttonSendIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String notesString = editTextNotes.getText().toString();
-                String numberString =  editTextNumer.getText().toString();
-                prepareTosendNotes(notesString, numberString);
+                String notes = editTextNotes.getText().toString();
+                String number =  editTextNumer.getText().toString();
+                prepareTosendNotes(notes, number);
             }
         });
     }
 
 
 
-    private void prepareTosendNotes(String notesString , String numberString){
-        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(notesString);
-        if(smsValidityCheck.isValid() == true){
+    private void prepareTosendNotes(String messageText , String contactNumber){
+        SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageText);
+        if(smsValidityCheck.isValid() == true && contactNumber.isEmpty() == false){
             //send
-            send(notesString ,numberString);
+            send(messageText ,contactNumber);
         }
         else{
+            if(smsValidityCheck.isValid() == false)
             Toast.makeText(this.getApplicationContext()
                     ,"Cannot send this SMS because it doesn't matches pattern"
                     ,Toast.LENGTH_LONG)
                     .show();
+            else if(contactNumber.isEmpty() == true)
+                Toast.makeText(this.getApplicationContext()
+                        ,"Cannot send this SMS because number is not provided!"
+                        ,Toast.LENGTH_LONG)
+                        .show();
         }
     }
 
-    private void send(String notesString , String numberString) {
+    private void send(String messageText , String contactNumber) {
         SmsManager manager = SmsManager.getDefault();
-        //manager.sendTextMessage(numberString,
-          //          null, notesString, null, null);
-
+        manager.sendTextMessage(contactNumber,
+                   null, messageText, null, null);
     }
 
     @Override

@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,7 +49,9 @@ public class IncomingSms extends BroadcastReceiver {
         }
     }
 
-
+    public void  setCurrentContex(Context co){
+        this.currentContext = co;
+    }
     private void processMessageSMS(SmsMessage currentMessage){
         String messageBody = currentMessage.getDisplayMessageBody().toString();
         processMessage(messageBody,ERROR_SMS);
@@ -76,6 +75,7 @@ public class IncomingSms extends BroadcastReceiver {
             soundMaker.playNotes();
         }
         else{
+            if(errorMessage!=ERROR_SMS)
             Toast.makeText(currentContext,
                     errorMessage
                     ,Toast.LENGTH_LONG)
@@ -85,11 +85,7 @@ public class IncomingSms extends BroadcastReceiver {
 
 
     public void registerUIElements(NotesView notesView/*, EditText e1 ,EditText e2,Button buttonTestIt , Button buttonSendIt*/ ){
-       // this.buttonTestIt = buttonTestIt;
-        //this.buttonSendIt = buttonSendIt;
         this.notesView = notesView;
-       // this.editableNotes = e1;
-       // this.editableNumber = e2;
     }
 
 

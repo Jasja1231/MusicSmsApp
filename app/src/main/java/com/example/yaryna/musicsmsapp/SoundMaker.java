@@ -29,23 +29,14 @@ public class SoundMaker {
     private void constructAudioBufferForMelody(){
         for(NoteInstance note :this.notes){
             //The purpose for this is to avoid sound jums between notes
-            NoteInstance emptynote = new NoteInstance("0XX");
+            //NoteInstance emptynote = new NoteInstance("0XX");
             fillBufferForNote(note);
-            fillBufferForNote(emptynote);
+            //fillBufferForNote(emptynote);
         }
     }
 
     /**The fillBuffer() method creates a buffer with values
      * representing a sinusoidal wave of a given frequency*/
-    private void fillBuffer(double frequency) {
-        for (int i=0;i<audioBuffer.length/2;i++) {
-            double val = Math.sin(2 * Math.PI * i / (SAMPLE_RATE/frequency));
-            short normVal = (short) ((val*32767));
-            audioBuffer[2*i] = (byte) (normVal & 0x00ff);
-            audioBuffer[2*i+1] = (byte) ((normVal & 0xff00) >>> 8);
-        }
-    }
-
     private void fillBufferForNote(NoteInstance note) {
        double noteFrequency = note.getFrequency();
         //TODO : CHECK THE DURATION
