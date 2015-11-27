@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String notesString = editTextNotes.getText().toString();
                 if(notesString !=null)
-                    if(notesString.isEmpty() == false)
                         myReceiver.drawAndPlay(notesString);
             }
         });
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private void prepareTosendNotes(String messageText , String contactNumber){
         SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageText);
         if(smsValidityCheck.isValid() == true && contactNumber.isEmpty() == false){
-            //send
             send(messageText ,contactNumber);
         }
         else{
