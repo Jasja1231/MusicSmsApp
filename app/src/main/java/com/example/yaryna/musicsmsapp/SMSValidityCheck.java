@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * Created by Yaryna on 20/11/2015.
+ * Created by 15038588
  */
 public class SMSValidityCheck {
 
@@ -52,10 +52,10 @@ public class SMSValidityCheck {
     private boolean checkValidity(ArrayList<String> splitNotes ){
         boolean isValid = true;
 
-        String pattern   = "[123468]{1}[EFGAB]{1}[4]";       // REGULAR NOTES
-        String pattern1  = "[123468]{1}[EFCD]{1}[5]";        // REGULAR NOTES
-        String pattern2  = "[123468]{1}[GAEBF]{1}[b][4]";    //FLATS FROM 4 OCTAVE
-        String pattern3  = "[123468]{1}[GABDCE]{1}[b][5]";   //FLATS FROM 5 OCTAVE
+        String pattern   = "[123468]{1}[EFGAB]{1}[4]{1}";       // REGULAR NOTES
+        String pattern1  = "[123468]{1}[EFCD]{1}[5]{1}";        // REGULAR NOTES
+        String pattern2  = "[123468]{1}[GAEBF]{1}[b]{1}[4]{1}";    //FLATS FROM 4 OCTAVE
+        String pattern3  = "[123468]{1}[GABDCE]{1}[b]{1}[5]{1}";   //FLATS FROM 5 OCTAVE
 
         if(splitNotes.isEmpty())
             isValid = false;

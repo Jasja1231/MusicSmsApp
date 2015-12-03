@@ -18,10 +18,16 @@ import java.util.ArrayList;
 public class NotesView extends View {
     private Canvas canvas;
 
+    public boolean finished = true;
     private ArrayList<NoteInstance> notes = null;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     final int LINE_COUNT = 5;
-    final int MARGIN = 80;
+    final int MARGIN_BETWEEN_LINES = 80;
+
+    final Bitmap trebleClefBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.treble_clef);
+    /**Rect(int left, int top, int right, int bottom)
+     Create a new rectangle with the specified coordinates.*/
+    final Rect trebleClefRect = new Rect(0,240,190,MARGIN_BETWEEN_LINES*(LINE_COUNT+1)+240);
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -30,22 +36,21 @@ public class NotesView extends View {
         paint.setStrokeWidth(5);
         drawParalelLines(canvas);
 
-
         this.canvas = canvas;
-            //insert treble clef
-        Bitmap b= BitmapFactory.decodeResource(getResources(), R.drawable.treble_clef);
-        canvas.drawBitmap(b, 0, 80*3, paint);
+
+        //Dwawing treble clef on rectangle ares
+        canvas.drawBitmap(trebleClefBitMap,null,trebleClefRect,paint);
 
         if(notes!=null)
             if(notes.isEmpty()!= true){
                     drawNotes(this.notes);
             }
+        this.finished = true;
     }
 
 
     private void drawNotes(ArrayList<NoteInstance> notes){
         paint.setStrokeWidth(5);
-
         double leftX = 200;
 
         for(NoteInstance note : notes ){
@@ -55,8 +60,8 @@ public class NotesView extends View {
             double noteLine = note.getLine();
 
             if(noteLine > 3){
-                bottomY = (noteLine+3)*80 + 30;
-                topY =  bottomY - 80*3;
+                bottomY = (noteLine+3)*MARGIN_BETWEEN_LINES + 30;
+                topY =  bottomY - MARGIN_BETWEEN_LINES*3;
                 if(note.getDuration() == 8){
                     topY = bottomY - 65;
                 }
@@ -70,7 +75,7 @@ public class NotesView extends View {
             }
 
             if(note.hasFlat() == true){
-                Bitmap flatBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.flat);
+                final Bitmap flatBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.flat);
                 double topFlatY = 0;
                 double bottomFlatY = 0;
                 if(noteLine > 3){
@@ -79,8 +84,8 @@ public class NotesView extends View {
                 }
 
                 else if(noteLine <= 3){
-                    bottomFlatY = topY + 80;
-                    topFlatY = topY;
+                    bottomFlatY = topY + 60 ;
+                    topFlatY = topY - 20 ;
                 }
 
                 rightX = leftX + 50;
@@ -94,7 +99,7 @@ public class NotesView extends View {
 
 
             if(note.getDuration() == 1 || note.getDuration() == 6 ){
-                rightX = rightX + 40;
+                rightX = rightX + 20;
             }
 
             Bitmap noteBitmap = BitmapFactory.decodeResource(
@@ -111,13 +116,16 @@ public class NotesView extends View {
     /**Draws paralel lines with predefined margin distance*/
     private void drawParalelLines(Canvas canvas){
        for(int i=1; i <= LINE_COUNT; i++){
-           int y_coordinate = MARGIN * (i+3);
+           int y_coordinate = MARGIN_BETWEEN_LINES * (i+3);
            canvas.drawLine( 0, y_coordinate , getWidth(), y_coordinate, paint);
         }
     }
 
 
     public void setNotesArray(ArrayList<NoteInstance> notesArray){
+        this.finished = false;
+
+        this.notes = null;
         this.notes = notesArray;
         invalidate();
     }

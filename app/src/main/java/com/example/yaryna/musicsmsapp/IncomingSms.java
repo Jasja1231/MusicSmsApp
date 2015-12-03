@@ -3,6 +3,7 @@ package com.example.yaryna.musicsmsapp;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -24,6 +25,11 @@ public class IncomingSms extends BroadcastReceiver {
     final SmsManager sms = SmsManager.getDefault();
     private Context currentContext;
     private NotesView notesView;
+
+    SoundMaker soundMaker = new SoundMaker();
+
+    public NotesView getNoteView(){return notesView;}
+
    // private EditText editableNotes , editableNumber;
    // private Button   buttonTestIt  , buttonSendIt  ;
 
@@ -39,8 +45,6 @@ public class IncomingSms extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody().toString();
                     Log.i("SmsReceiver", " message: " + message);
                     currentContext = context;
-
-                    Toast.makeText(context,"i ::: " + i + " message: " + message + "Received",  Toast.LENGTH_SHORT).show();
                     processMessageSMS(currentMessage);
                  }
             }
@@ -67,12 +71,14 @@ public class IncomingSms extends BroadcastReceiver {
         if(smsValidityCheck.isValid() == true){
             ArrayList<String> noteStrings = smsValidityCheck.getSplitNotes();
             NotesConstructor notesConstructor = new NotesConstructor(noteStrings);
-
-            //GENERATE SOUNDS
             ArrayList<NoteInstance> notes = notesConstructor.getNotes();
+
+
             this.notesView.setNotesArray(notes);
-            SoundMaker soundMaker = new SoundMaker(notes);
-            soundMaker.playNotes();
+            while(this.notesView.finished != true){
+                soundMaker.playNotes(notes);
+                break;
+            }
         }
         else{
             if(errorMessage!=ERROR_SMS)
@@ -87,7 +93,5 @@ public class IncomingSms extends BroadcastReceiver {
     public void registerUIElements(NotesView notesView/*, EditText e1 ,EditText e2,Button buttonTestIt , Button buttonSendIt*/ ){
         this.notesView = notesView;
     }
-
-
 
 }

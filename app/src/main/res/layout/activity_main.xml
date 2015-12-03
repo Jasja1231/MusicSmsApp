@@ -16,18 +16,18 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
+
         <com.example.yaryna.musicsmsapp.NotesView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="800px"
             android:id="@+id/note_view"
             android:background="#e8dcdc"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="false" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="10px"
-            android:background="@android:color/darker_gray"/>
+            android:background="#583947"/>
 
         <TextView
         android:layout_width="match_parent"
@@ -80,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="150dp"
                 android:id="@+id/button_test"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:background="#583947">
             </Button>
 
             <Button
@@ -88,14 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_width="150dp"
                 android:id="@+id/button_send"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:background="#583947">
             </Button>
         </LinearLayout>
     </LinearLayout>
 
-    <!--android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" /-->
 
 </android.support.design.widget.CoordinatorLayout>

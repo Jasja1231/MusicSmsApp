@@ -9,12 +9,12 @@ import android.graphics.drawable.Drawable;
  */
 public class ResourceConstructor {
 
-    /**Quaver 1x
-     * Crotchet  2x
+    /**Quaver          1x
+     * Crotchet        2x
      * Dotted crotchet 3x
-     * Minim   4x
-     * Dotted minim  6x
-     * Semibreve  8x */
+     * Minim           4x
+     * Dotted minim    6x
+     * Semibreve       8x */
     private static ResourceConstructor instance;
 
 
@@ -27,8 +27,6 @@ public class ResourceConstructor {
 
     public int getNoteImageResourceId(double line , int duration){
         int resourceID = 0;
-        //BitmapFactory.decodeResource(getResources(), R.drawable.treble_clef);
-        //stem up
         if(line > 3) {
             switch (duration){
                 case 1:
@@ -44,7 +42,6 @@ public class ResourceConstructor {
                     break;
                 case 8:resourceID =  R.drawable.semibreve;
                     break;
-
             }
         }
         //stem down
