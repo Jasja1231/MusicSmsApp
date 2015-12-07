@@ -1,28 +1,35 @@
 package com.example.yaryna.musicsmsapp;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.regex.PatternSyntaxException;
 
 /**
+ * This class check is received text matched notes pattern.
  * Created by 15038588
  */
 public class SMSValidityCheck {
 
-    //array of splitted words from received message to check
+    //array of split words from received message to check
     ArrayList<String> splitNotes;
     String messageBody;
     private boolean isValidSMS;
 
 
+    /**
+     * Gatter for isValidSMS
+     * @return true if valid
+     *         false otherwise
+     **/
     public boolean isValid(){
         return this.isValidSMS;
     }
     public ArrayList<String> getSplitNotes(){return splitNotes;}
 
-    /**Constructor for SMS pattern check*/
+    /**Constructor for SMS pattern check
+     * @param. messageBody string got from SMS message to be checked.
+     * */
     public SMSValidityCheck(String messageBody){
         this.messageBody = messageBody;
         //splitting array into separate words
@@ -30,6 +37,12 @@ public class SMSValidityCheck {
         this.isValidSMS = checkValidity(splitNotes);
     }
 
+    /**
+     * Separates words in a single string with space separator.
+     * @pre. messageToSplit!=null.
+     * @param. messageToSplit string to split into array of words.
+     * @return. ArrayList<String> words in original string separated by space.
+     * */
     private ArrayList<String> splitIntoArray(String messageToSplit){
         ArrayList<String> result = new ArrayList<>();
         try {
@@ -52,6 +65,9 @@ public class SMSValidityCheck {
     private boolean checkValidity(ArrayList<String> splitNotes ){
         boolean isValid = true;
 
+        /**
+         * The notes pattern string should follow.
+         */
         String pattern   = "[123468]{1}[EFGAB]{1}[4]{1}";       // REGULAR NOTES
         String pattern1  = "[123468]{1}[EFCD]{1}[5]{1}";        // REGULAR NOTES
         String pattern2  = "[123468]{1}[GAEBF]{1}[b]{1}[4]{1}";    //FLATS FROM 4 OCTAVE

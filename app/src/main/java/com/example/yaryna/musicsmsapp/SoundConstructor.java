@@ -4,7 +4,8 @@ package com.example.yaryna.musicsmsapp;
  * Created by 15038588
  */
 
-/**Singleton class stores frequency values for every tone,returns frequency for specific note*/
+/**Singleton class stores frequency values for every tone,
+ * returns frequency for specific note*/
 public  class SoundConstructor {
 
     private static SoundConstructor instance;

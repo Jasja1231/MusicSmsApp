@@ -25,8 +25,10 @@ public class NotesView extends View {
     final int MARGIN_BETWEEN_LINES = 80;
 
     final Bitmap trebleClefBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.treble_clef);
-    /**Rect(int left, int top, int right, int bottom)
-     Create a new rectangle with the specified coordinates.*/
+    /**
+     * Rect(int left, int top, int right, int bottom)
+     * Create a new rectangle with the specified coordinates.
+     */
     final Rect trebleClefRect = new Rect(0,240,190,MARGIN_BETWEEN_LINES*(LINE_COUNT+1)+240);
 
     @Override
@@ -34,11 +36,11 @@ public class NotesView extends View {
         super.onDraw(canvas);
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(5);
-        drawParalelLines(canvas);
+        drawParallelLines(canvas);
 
         this.canvas = canvas;
 
-        //Dwawing treble clef on rectangle ares
+        //Drawing treble clef on rectangle ares
         canvas.drawBitmap(trebleClefBitMap,null,trebleClefRect,paint);
 
         if(notes!=null)
@@ -49,6 +51,8 @@ public class NotesView extends View {
     }
 
 
+    /**Draw notes from ArrayList<NoteInstance> notes on canvas.
+     * @param notes is an ArrayList<NoteInstance> to be drawn*/
     private void drawNotes(ArrayList<NoteInstance> notes){
         paint.setStrokeWidth(5);
         double leftX = 200;
@@ -106,15 +110,18 @@ public class NotesView extends View {
                     getResources(), note.getResourceID());
 
             /**Rect(int left, int top, int right, int bottom)
-             Create a new rectangle with the specified coordinates.*/
+             * Create a new rectangle with the specified coordinates.
+             **/
             Rect noteRect = new Rect((int)leftX,(int)topY,(int)rightX,(int)bottomY);
             canvas.drawBitmap(noteBitmap,null,noteRect,paint);
             leftX = rightX + 10;
         }
     }
 
-    /**Draws paralel lines with predefined margin distance*/
-    private void drawParalelLines(Canvas canvas){
+    /**Draws paralel lines with predefined margin distance
+     * @param canvas  canvas for lines to be drawn on.
+     **/
+    private void drawParallelLines(Canvas canvas){
        for(int i=1; i <= LINE_COUNT; i++){
            int y_coordinate = MARGIN_BETWEEN_LINES * (i+3);
            canvas.drawLine( 0, y_coordinate , getWidth(), y_coordinate, paint);

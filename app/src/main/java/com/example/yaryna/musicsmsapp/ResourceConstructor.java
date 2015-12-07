@@ -1,10 +1,7 @@
 package com.example.yaryna.musicsmsapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-
 /**
+ * ResourceConstructor class keeps references to resources corresponding to specific note.
  * Created by 15038588
  */
 public class ResourceConstructor {

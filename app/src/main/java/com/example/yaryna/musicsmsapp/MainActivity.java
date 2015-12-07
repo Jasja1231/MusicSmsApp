@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-    private EditText editTextNotes , editTextNumer;
+    private EditText editTextNotes , editTextNumber;
     private Button buttonTestIt , buttonSendIt;
     private NotesView noteView;
 
@@ -26,21 +26,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editTextNotes = (EditText)findViewById(R.id.edit_text_notes);
-        editTextNumer = (EditText)findViewById(R.id.edit_text_number);
+        editTextNumber = (EditText)findViewById(R.id.edit_text_number);
         noteView      = (NotesView) findViewById(R.id.note_view);
 
         buttonTestIt  = (Button) findViewById(R.id.button_test);
         buttonSendIt  = (Button) findViewById(R.id.button_send);
 
         final IncomingSms myReceiver = new IncomingSms();
-        myReceiver.registerUIElements(noteView /*, editTextNotes, editTextNumer , buttonTestIt , buttonSendIt*/ );
+        myReceiver.registerUIElements(noteView);
         myReceiver.setCurrentContex(getBaseContext());
         //Filter for intent : receive message
         IntentFilter filter = new IntentFilter(SMS_RECEIVED);
         registerReceiver(myReceiver,filter);
 
 
-        //setting on click listeners
+        //setting on click listener to button for testing sms
         buttonTestIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,20 +51,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        //setting on click listener to sending button
         buttonSendIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String notes = editTextNotes.getText().toString();
-                String number =  editTextNumer.getText().toString();
-                prepareTosendNotes(notes, number);
+                String number =  editTextNumber.getText().toString();
+                prepareToSendNotes(notes, number);
             }
         });
     }
 
 
-
-    private void prepareTosendNotes(String messageText , String contactNumber){
+    /**
+     * Check if user SMS is valid before sending. If valid, sends text message.
+     * @param contactNumber recipient number
+     * @param messageText text to be send
+     * @invariant.   contactNumber, messageText.
+     **/
+    private void prepareToSendNotes(String messageText , String contactNumber){
         SMSValidityCheck smsValidityCheck = new SMSValidityCheck(messageText);
         if(smsValidityCheck.isValid() == true && contactNumber.isEmpty() == false){
             send(messageText ,contactNumber);
@@ -83,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**Sends text message.
+     * @param contactNumber recipient number
+     * @param messageText text to be send
+     * @invariant.   contactNumber, messageText.             
+     **/
     private void send(String messageText , String contactNumber) {
         SmsManager manager = SmsManager.getDefault();
         manager.sendTextMessage(contactNumber,

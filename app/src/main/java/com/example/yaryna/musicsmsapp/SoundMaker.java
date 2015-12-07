@@ -73,7 +73,13 @@ public  class SoundMaker {
         }
     }
 
-    //Add new created buffer for one note to general notes audio buffer
+    /**
+     * Add new created buffer for one note to general notes audio buffer.
+     * @param noteAudioBuffer audio buffer created for single note to be added.
+     * @post. old/audioBuffer size < new/audioBuffer size.
+     *        old/audioBuffer size == old/audioBuffer size + old/noteAudioBuffer size
+     * @throws. IOException
+     **/
     private void addToGlobalAudioBuffer(byte[] noteAudioBuffer) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
         try {
@@ -100,12 +106,17 @@ public  class SoundMaker {
         audioTrack.play();
     }
 
+    /**
+     * Creates new background task to construct and play notes.
+     **/
     public void playNotes(ArrayList<NoteInstance> noteInstances) {
         this.setNotes(noteInstances);
         this.audioBuffer = null;
         new BackgroundPlay().execute();
     }
 
+    /**Inner class extending AsyncTask that does notes construction
+     * and paying of the notes.*/
     private class BackgroundPlay extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... params) {
